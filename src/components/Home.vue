@@ -6,9 +6,10 @@
 </template>
 
 <script>
-require('bootstrap-vue')
+import checkAuth from './mixins/checkAuth'
 
 export default {
+  mixins: [checkAuth],
   name: 'Home'
 }
 </script>
