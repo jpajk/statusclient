@@ -2,15 +2,14 @@
 const checkAuth = {
   created () {
     this.$store.dispatch('checkIsAuthenticated')
-      .then(isAuthenticated => {
-        if (!isAuthenticated) {
+      .then(res => {
+        if (!res.data.current_user) {
           this.$router.push({ name: 'Login' })
         }
       })
       .catch(err => {
-        if (err.response.status === 401) {
-          this.$router.push({ name: 'Login' })
-        }
+        console.log(err)
+        this.$router.push({ name: 'Login' })
       })
   }
 }

@@ -39,12 +39,8 @@ const actions = {
    */
   checkIsAuthenticated () {
     return new Promise((resolve, reject) => {
-      client.get('/users/is-authenticated', {
-        params: {
-          token: this.getters.token
-        }
-      }).then(res => {
-        resolve(res.data.isAuthenticated)
+      client.get('/users/is-authenticated').then(res => {
+        resolve(res)
       }).catch(err => {
         reject(err)
       })
