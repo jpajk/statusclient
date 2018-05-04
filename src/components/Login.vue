@@ -9,7 +9,7 @@
             <b-form-input
                     id="email-input"
                     type="email"
-                    v-model="form.email"
+                    v-model="email"
                     required
                     placeholder="Enter email"
                 >
@@ -22,14 +22,14 @@
                 <b-form-input
                         id="password-input"
                         type="password"
-                        v-model="form.password"
+                        v-model="password"
                         required
                         placeholder="Enter password"
                 >
                 </b-form-input>
             </b-form-group>
             <div class="text-right">
-                <b-button type="submit" variant="primary">Submit</b-button>
+                <b-button type="submit" @click.prevent="loginOrRegister" variant="primary">Submit</b-button>
                 <b-button type="reset" variant="warning">I forgot my password</b-button>
             </div>
         </b-form>
@@ -41,13 +41,20 @@ export default {
   name: 'Login',
   data: () => {
     return {
-      form: {
-        email: '',
-        password: ''
-      }
+      email: '',
+      password: ''
     }
   },
   methods: {
+    loginOrRegister () {
+      this.$store.dispatch('loginOrRegister', {email: this.email, password: this.password})
+        .then(res => {
+          this.$router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          console.log(err) // todo messages
+        })
+    }
   }
 }
 </script>

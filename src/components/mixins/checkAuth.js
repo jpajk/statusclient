@@ -7,6 +7,11 @@ const checkAuth = {
           this.$router.push({ name: 'Login' })
         }
       })
+      .catch(err => {
+        if (err.response.status === 401) {
+          this.$router.push({ name: 'Login' })
+        }
+      })
   }
 }
 
