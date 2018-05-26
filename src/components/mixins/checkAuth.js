@@ -3,7 +3,7 @@ const checkAuth = {
   created () {
     this.$store.dispatch('checkIsAuthenticated')
       .then(res => {
-        if (!res.data.current_user) {
+        if (!res.data.currentUser) {
           this.$router.push({ name: 'Login' })
         }
       })

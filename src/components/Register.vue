@@ -1,6 +1,6 @@
 <template>
     <div class="col-sm-6 offset-3">
-        <h2 class="text-center">Login or register</h2>
+        <h2 class="text-center">Register</h2>
         <b-form >
             <b-form-group
                     label="Email:"
@@ -28,13 +28,23 @@
                 >
                 </b-form-input>
             </b-form-group>
+            <b-form-group
+                    label="Repeat password:"
+                    label-for="repeat-password-input"
+            >
+                <b-form-input
+                        id="repeat-password-input"
+                        type="password"
+                        v-model="repeatPassword"
+                        required
+                        placeholder="Repeat password"
+                >
+                </b-form-input>
+            </b-form-group>
             <div class="text-right">
-                <b-button type="submit" @click.prevent="loginOrRegister" variant="success">Submit</b-button>
-                <b-button type="reset" variant="warning">I forgot my password</b-button>
-            </div>
-            <div class="text-right" style="margin-top:12px">
-                <router-link class="btn btn-primary" :to="{name: 'Register'}">
-                    Register
+                <b-button type="submit" @click.prevent="loginOrRegister" variant="primary">Submit</b-button>
+                <router-link class="btn btn-light" :to="{name: 'Login'}">
+                    Back to login
                 </router-link>
             </div>
         </b-form>
@@ -47,13 +57,14 @@ export default {
   data: () => {
     return {
       email: '',
-      password: ''
+      password: '',
+      repeatPassword: ''
     }
   },
   methods: {
     loginOrRegister () {
-      this.$store.dispatch('login', {email: this.email, password: this.password})
-        .then(res => {
+      this.$store.dispatch('register', {email: this.email, password: this.password})
+        .then(() => {
           this.$router.push({ name: 'Home' })
         })
         .catch(err => {

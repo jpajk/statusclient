@@ -6,11 +6,16 @@
 </template>
 
 <script>
-import checkAuth from './mixins/checkAuth'
+// import checkAuth from './mixins/checkAuth'
 
 export default {
-  mixins: [checkAuth],
-  name: 'Home'
+  mixins: [],
+  name: 'Home',
+  mounted () {
+    this.$http.get('/statuses').then(res => {
+      console.log('my glorious response', res)
+    })
+  }
 }
 </script>
 

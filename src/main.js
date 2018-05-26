@@ -6,8 +6,10 @@ import BootstrapVue from 'bootstrap-vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import { client } from './lib/client'
 
 Vue.config.productionTip = false
+Vue.http = Vue.prototype.$http = client
 
 Vue.use(BootstrapVue)
 

@@ -1,11 +1,13 @@
 
 import { client } from '../../lib/client'
 
-const state = {
+const originalState = {
   isAuthenticated: false,
   token: '',
   currentUser: {}
 }
+
+const state = originalState
 
 const getters = {
   isAuthenticated (state) {
@@ -20,6 +22,10 @@ const getters = {
 }
 
 const mutations = {
+  CLEAR (state) {
+    state = originalState
+  },
+
   SET_IS_AUTHENTICATED (state, payload) {
     state.isAuthenticated = payload
   },
@@ -53,17 +59,39 @@ const actions = {
    * @param password
    * @returns {Promise<any>}
    */
-  loginOrRegister (context, { email, password }) {
+  login (context, { email, password }) {
     return new Promise((resolve, reject) => {
-      client.post('/users/login-or-register', JSON.stringify({
+      client.post('/users/login', {
         email: email,
         password: password
-      })).then(res => {
-        if (!res.data.current_user) {
+      }).then(res => {
+        let currentUser = res.getFromData('currentUser')
+
+        if (!currentUser) {
           reject(new Error('Authentication failure'))
         }
 
-        let currentUser = res.data.current_user
+        context.commit('SET_CURRENT_USER', currentUser)
+        context.commit('SET_TOKEN', currentUser.token)
+
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+
+  register (context, { email, password }) {
+    return new Promise((resolve, reject) => {
+      client.post('/users/register', {
+        email: email,
+        password: password
+      }).then(res => {
+        let currentUser = res.getFromData('currentUser')
+
+        if (!currentUser) {
+          reject(new Error('Authentication failure'))
+        }
 
         context.commit('SET_CURRENT_USER', currentUser)
         context.commit('SET_TOKEN', currentUser.token)
