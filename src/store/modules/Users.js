@@ -1,18 +1,12 @@
 
 import { client } from '../../lib/client'
 
-const originalState = {
-  isAuthenticated: false,
+const state = {
   token: '',
   currentUser: {}
 }
 
-const state = originalState
-
 const getters = {
-  isAuthenticated (state) {
-    return state.isAuthenticated
-  },
   token (state) {
     return state.token
   },
@@ -23,11 +17,8 @@ const getters = {
 
 const mutations = {
   CLEAR (state) {
-    state = originalState
-  },
-
-  SET_IS_AUTHENTICATED (state, payload) {
-    state.isAuthenticated = payload
+    state.token = ''
+    state.currentUser = {}
   },
 
   SET_TOKEN (state, payload) {
@@ -40,19 +31,6 @@ const mutations = {
 }
 
 const actions = {
-  /**
-   * @returns {Promise<any>}
-   */
-  checkIsAuthenticated () {
-    return new Promise((resolve, reject) => {
-      client.get('/users/is-authenticated').then(res => {
-        resolve(res)
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-
   /**
    * @param context
    * @param email

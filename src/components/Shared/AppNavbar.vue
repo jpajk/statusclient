@@ -1,7 +1,7 @@
 <template>
     <b-navbar class="fixed-top bg-dark" variant="primary" type="dark">
         <b-navbar-brand href="#">Employee Status</b-navbar-brand>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" v-if="this.$store.getters.token">
             <li class="nav-item">
                 <a class="nav-link" @click="logout" href="#">
                     Logout

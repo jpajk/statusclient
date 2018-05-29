@@ -13,7 +13,7 @@ export default {
   name: 'Home',
   mounted () {
     this.$http.get('/statuses').then(res => {
-      console.log('my glorious response', res)
+      //
     })
   }
 }
