@@ -58,7 +58,12 @@ const actions = {
       })
     })
   },
-
+  /**
+   * @param context
+   * @param email
+   * @param password
+   * @returns {Promise<any>}
+   */
   register (context, { email, password }) {
     return new Promise((resolve, reject) => {
       client.post('/users/register', {
